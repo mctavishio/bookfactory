@@ -1,0 +1,41 @@
+ffmpeg -r 60 -f image2 -s 1920x1080 -i pic%04d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p test.mp4
+
+ffmpeg -r 60 -f image2 -s 1920x1080 -start_number 1  -i image-%03d.png -vcodec libx264 -crf 23  -pix_fmt yuv420p test.mp4
+
+ffmpeg -r 24 -f image2  -s 1920x1080 -start_number 000002 -i image-%06d.png all.webm
+
+
+popple
+https://jdhao.github.io/2019/11/14/convert_pdf_to_images_pdftoppm/
+
+pdftoppm -singlefile -f 4 -r 72 -jpeg -jpegopt quality=90 presentation.pdf test_poppler
+
+pdftoppm -r 72 -jpeg -jpegopt quality=90 algorithm-1635969788_printrun-1636068421230_size-16x9_48.pdf algorithm-1635969788_printrun-1636068421230_size-16x9_48_small
+
+pdftoppm -r 300 -tiff algorithm-1635969788_printrun-1636068421230_size-16x9_48.pdf algorithm-1635969788_printrun-1636068421230_size-16x9_48_tiff
+
+pdftoppm -r 72 -png algorithm-1635969788_printrun-1636068421230_size-16x9_48.pdf algorithm-1635969788_printrun-1636068421230_size-16x9_48_png
+
+pdfunite *.pdf all.pdf
+
+for file in *pdf.png; do mv "$file" "${file/pdf.png/.png}"; done
+for file in *-0.png; do mv "$file" "${file/-0.png/.png}"; done
+
+for i in *; do magick convert -density 300 ./$i -depth 8 ./$i.tiff; done
+sips -s format tiff input.pdf --out output.tiff
+sips -s format tiff input.pdf --out output.tiff
+(mac sips tool ...
+run sips to see flag options
+for i in *.pdf; do sips -s format tiff $i --out $i.tif; done
+
+for i in *.pdf; do sips –z 1920 -s format png $i --out $i.png; done
+
+for i in *.pdf; do sips –z 5400 9600 -s dpiWidth 300 -s dpiHeight 300 -s format tiff $i --out $i.tif; done
+
+for i in *.pdf; do magick convert $i -resize 1920 $i.png; done
+for i in *.pdf; do magick convert $i -resize 1920 $i.jpg; done
+
+for i in *.pdf; do magick convert $i $i.png; done
+for i in *.pdf; do magick convert $i $i.tif; done
+for i in *.pdf; do magick convert $i $i.jpg; done
+
