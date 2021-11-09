@@ -4,5 +4,9 @@
 **/*.webm
 node_modules/
 keys.js
+**/*.tif
+**/*.pdf
+data/mill/algorithm*book/*
+**/*.zip
 scratchFiles/
 temp/

@@ -1,4 +1,5 @@
 const PDFDocument = require("pdfkit");
+const PDFImage = require("pdf-image").PDFImage;
 const fs = require('fs');
 
 const tools = ( () => {
@@ -25,38 +26,55 @@ const tools = ( () => {
 })( );
 
 const algorithmtimestamp = "1635998398";
-const runtimestamp = Date.now().toString();
+const printruntimestamp = Date.now();
+const printrundatetime = new Date(printruntimestamp).toString();
 const seed = {
 	dimensions: [ 
-		{width: (8.5)*72, height: (8.5)*72, name: "8.5x8.5"},
-		{width: (16)*72, height: (9)*72, name: "16x9"}
+		// {width: (9)*72, height: (9)*72, name: "9x9"},
+		// {width: (16)*72, height: (9)*72, name: "16x9"},
+		// {width: 1920, height: 1080, name: "1920x1080"},
+		// {width: 1920, height: 1080, name: "AR16x9"},
+		{width: 16*300, height: 9*300, name: "AR16x9"}
 	],
 	margins: { top: Math.floor(.8*72),bottom:Math.floor(.8*72),left:Math.floor(.9*72),right:Math.floor(.9*72) },
-	titleprefix: "algorithm-" + algorithmtimestamp + "_" + "run-" + Date.now().toString(),
+	printrunid: printruntimestamp.toString(),
+	algorithmid: algorithmtimestamp,
+	titleprefix: "algorithm id : " + algorithmtimestamp + " " + "printrun id : " + printrundatetime,
+	doctitleprefix: "algorithm-" + algorithmtimestamp + "_" + "printrun-" + printruntimestamp.toString(),
 	npages: 48,
+	pigments: [ [tools.pigments.black,3, "black"], [tools.pigments.white,3,"white"], [tools.pigments.blue,0,"blue"], [tools.pigments.yellow,0,"yellow"], [tools.pigments.red,1,"red"]],
 }
 
+let colors = tools.reifyWeightedArray(seed.pigments);
 
 seed.dimensions.forEach( dimension => {
 
-	let title = seed.titleprefix +  "_size-" + dimension.name;
-	let info = { doctitle: title, Title: title, Author: "mctavish", Subject: "generative drawing series", Keywords: "net.art, webs, networks" };
+	let title = seed.titleprefix +  " (size : " + dimension.name + ")";
+	let doctitle = seed.doctitleprefix +  "_size-" + dimension.name;
+	let foldername = "./" + doctitle + "_book";
+	let dir = foldername;
+	if (!fs.existsSync(dir)){
+	    fs.mkdirSync(dir);
+	}
 
-	let doc = new PDFDocument(
-	{ 
-		size: [dimension.width, dimension.height],
-		margins: seed.margins,
-		info: info,
-		// bufferPages: true
-	});
-
-	doc.font('Courier-Bold');
-	doc.pipe(fs.createWriteStream(info.doctitle + '.pdf'));
-	doc.fontSize(18);
+	let book = {
+		id: doctitle,
+		algorithmid: algorithmtimestamp,
+		printrunid: printruntimestamp.toString(),
+		timestamp: printruntimestamp.toString(),
+		datetime: printrundatetime,
+		title: title,
+		foldername: foldername,
+		npages: seed.npages,
+		colors: seed.pigments,
+		dimensions: dimension,
+		pigments: seed.pigments.filter(pigment=>pigment[1]>0).map(pigment=>pigment[2]),
+		author: "mctavish",
+	};
 
 	//pages:
 	let width = dimension.width, height = dimension.height, min = Math.min(width,height), max = Math.max(width,height);
-	let matrix = [...Array(seed.npages).keys()].reduce( (pagematrix, pagej) => {
+	let drawings = [...Array(seed.npages).keys()].reduce( (pagematrix, pagej) => {
 
 		let colors = tools.reifyWeightedArray([ [tools.pigments.black,8], [tools.pigments.white,12], [tools.pigments.blue,0], [tools.pigments.yellow,0], [tools.pigments.red,4]]);
 
@@ -163,8 +181,25 @@ seed.dimensions.forEach( dimension => {
 		return  pagematrix.concat({layers});
 	}, []);
 
-	matrix.forEach( (page,p) => {
-		
+	book.drawings = drawings;
+
+	drawings.forEach( (page,p) => {
+		let pagetitle = doctitle + "_" + (p+1).toString().padStart(2, "0");
+		let info = { doctitle: doctitle, pagetitle: pagetitle, Title: title, Author: "mctavish", Subject: "generative drawing series", Keywords: "net.art, webs, networks" };
+		let pdffilename = pagetitle + ".pdf";
+
+		let doc = new PDFDocument(
+		{ 
+			size: [dimension.width, dimension.height],
+			margins: seed.margins,
+			info: info,
+			id: pagetitle,
+			// bufferPages: true
+		});
+
+		doc.font("Courier-Bold");
+		doc.pipe(fs.createWriteStream(foldername+"/"+pdffilename));
+		doc.fontSize(18);
 		page.layers.forEach( (layer,l) => {
 			layer.rects.forEach( (rect,j) => {
 				let { x, y, width, height, lineWidth, dash, space, strokeOpacity, fillOpacity, strokeColor, fillColor } = rect;
@@ -187,21 +222,52 @@ seed.dimensions.forEach( dimension => {
 					doc.circle(cx, cy, r).fillOpacity(0).strokeColor(strokeColor).dash(dash, {space:space}).lineWidth(lineWidth).stroke();
 				}
 			});
-			
-			
 		});
-		
+		doc.end();
+		// let pdfImage = new PDFImage(foldername+"/"+pdffilename,
+		// 	{
+		// 		// convertOptions: {
+		// 		//     "-resize": width+"x"+height,
+		// 		//     "-quality": "100"
+		// 		//  } 
+		// });
+		// pdfImage.convertPage(0).then( imagePaths => { console.log("done png") });
+
 		p < seed.npages-1 ? doc.addPage() : "done";
 	});
-	// # Finalize PDF file
-	doc.end();
-	fs.writeFile(info.doctitle + "_parameters.js", JSON.stringify(matrix,null,"\t"), (err) => {
+
+	fs.writeFileSync(foldername+"/"+doctitle + "_parameters.js", JSON.stringify(book,null,"\t"), (err) => {
 	  if (err)
 	    console.log(err);
 	  else {
 	    console.log("File written successfully\n");
-	    // console.log("The written has the following contents:");
-	    // console.log(fs.readFileSync(info.doctitle + "_parameters.js", "utf8"));
+	  }
+	});
+
+	let nextSteps = `
+for i in *.pdf; do magick convert $i -resize 1920 $i.png; done;
+for file in *pdf.png; do mv "$file" "$\{file/.pdf.png/.png\}"; done;
+for i in *.pdf; do magick convert $i $i.tif; done
+for file in *pdf.tif; do mv "$file" "$\{file/.pdf.tif/.tif\}"; done;
+cd ..
+node createCoreImages ${foldername}
+node createFilm ${foldername}
+cd ${foldername}
+ffmpeg -r 24 -f image2  -s 1920x1080 -start_number 01 -i ${doctitle}%02d.png ${doctitle}.webm
+ffmpeg -r 24 -f image2  -s 1920x1080 -start_number 000001 -i image-%06d.png ${doctitle}_pulse.webm
+rm coreimage*.png
+for i in algorithm*.png; do magick convert $i -resize 640 $i.small.png; done;
+for file in *png.small.png; do mv "$file" "$\{file/.png.small.png/-small.png\}"; done;
+pdfunite *.pdf ${doctitle}.pdf
+# quicktime: open an image sequence with image-* files and save as ${doctitle}_pulse.mov
+# rm image-*.png
+# quicktime: open an image sequence with ${doctitle} files order by date created and save as ${doctitle}.mov
+	`;
+	fs.writeFileSync(foldername+"/"+doctitle + "_processCommands.sh", nextSteps, (err) => {
+	  if (err)
+	    console.log(err);
+	  else {
+	    console.log("File written successfully\n");
 	  }
 	});
 });

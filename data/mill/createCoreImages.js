@@ -9,16 +9,6 @@ console.log("first arg: ", args[0]);
 // let dirname = args[0].includes("dir=") ? args[0].substr(4) : __dirname;
 let dirname =  args[0]!==null ? args[0] : __dirname;
 
-// fs.readdir(dirname, (err, files) => {
-// 	if (err)
-// 		console.log(err);
-// 	else {
-// 		console.log("\nCurrent directory filenames:");
-// 		files.filter(file => file.includes(".png")).forEach( (file,j) => {
-// 			fs.renameSync( dirname+"/"+file, dirname+"/"+file.replace("-0", "") );
-// 		})
-// 	}
-// })
 console.log("\nCurrent directory  " + dirname);
 fs.readdir(dirname, (err, files) => {
 	if (err)

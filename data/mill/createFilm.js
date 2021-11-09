@@ -16,7 +16,6 @@ const tools = {
 let dirname =  args[0]!==null ? args[0] : __dirname;
 
 console.log("dirname= " + dirname);
-// let corefiles = [];
 fs.readdir(dirname, (err, files) => {
 	if (err)
 		console.log(err);
@@ -29,7 +28,17 @@ fs.readdir(dirname, (err, files) => {
 		let film = corefiles.map( file => { return { file: file, n: tools.randominteger(1,1) } });
 		film.push(...corefiles.map( file => { return { file: file, n: tools.randominteger(1,4) } }));
 		film.push(...corefiles.map( file => { return { file: file, n: tools.randominteger(3,6) } }));
+		film.push(...corefiles.map( file => { return { file: file, n: tools.randominteger(4,4) } }));
+		film.push(...corefiles.map( file => { return { file: file, n: tools.randominteger(1,4) } }));
+		film.push(...corefiles.map( file => { return { file: file, n: tools.randominteger(1,1) } }));
 		console.log("film = " + JSON.stringify(film));
+		fs.writeFileSync(dirname+"/" + "filmparameters.js", JSON.stringify(film,null,"\t"), (err) => {
+			if (err)
+				console.log(err);
+			else {
+				console.log("filmparameters written successfully\n");
+			}
+		});
 		let count = 0;
 		film.forEach( (frame, j) => {
 			let file = frame.file;
@@ -42,12 +51,3 @@ fs.readdir(dirname, (err, files) => {
 	}
 })
 
-
-
-// fs.writeFileSync(dirname+"/" + "filmparameters.js", JSON.stringify(film,null,"\t"), (err) => {
-//   if (err)
-//     console.log(err);
-//   else {
-//     console.log("File written successfully\n");
-//   }
-// });
