@@ -10,3 +10,5 @@ data/mill/algorithm*book/*
 **/*.zip
 scratchFiles/
 temp/
+# Local Netlify folder
+.netlify
