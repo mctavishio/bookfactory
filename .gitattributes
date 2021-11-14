@@ -3172,3 +3172,7 @@ data/mill/algorithm-1635969788_printrun-1636390158622_size-AR16x9_book/algorithm
 data/mill/algorithm-1635969788_printrun-1636401370561_size-AR16x9_book/algorithm-1635969788_printrun-1636401370561_size-AR16x9_05.pdf filter=lfs diff=lfs merge=lfs -text
 data/mill/algorithm-1636347815_printrun-1636416681994_size-AR16x9_book/algorithm-1636347815_printrun-1636416681994_size-AR16x9_24-small.png filter=lfs diff=lfs merge=lfs -text
 data/mill/algorithm-1635969788_printrun-1636402772415_size-AR16x9_book/algorithm-1635969788_printrun-1636402772415_size-AR16x9_pulse.mov filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.webm filter=lfs diff=lfs merge=lfs -text

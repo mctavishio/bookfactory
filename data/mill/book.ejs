@@ -79,8 +79,8 @@
 			    Sorry, your browser doesn't support embedded videos.
 			</video> -->
 			<video controls width="100%" loop=1>
-			    <source src="algorithm-1636425448_printrun-1636427957740_size-AR16x9.webm" type="video/webm">
-			    <source src="algorithm-1636425448_printrun-1636427957740_size-AR16x9.mov" type="video/mp4">
+			    <source src="book.webm" type="video/webm">
+			    <source src="book.mov" type="video/mp4">
 			    Sorry, your browser doesn't support embedded videos.
 			</video>
 			<!-- <img src="algorithm-1636425448_printrun-1636427957740_size-AR16x9_01.png" /> -->
@@ -103,7 +103,7 @@
 		<h1>other links</h1>
 	</header>
 	<ul class="expand">
-		<li><a href="algorithm-1636425448_printrun-1636427957740_size-AR16x9.pdf">complete pdf</a></li>
+		<li><a href="book.pdf">complete pdf</a></li>
 		<li><a href="algorithm-1636425448_printrun-1636427957740_size-AR16x9.zip">zip file with all resources</a></li>
 	</ul>
 	<!-- <details>
@@ -158,7 +158,7 @@
 </div>
 <!-- <div id="hidetext"><a id="hidetextlink" href="#" title="hide text">-</a></div> -->
 </body>
-<script src="algorithm-1636425448_printrun-1636427957740_size-AR16x9_parameters.js"></script>
+<script src="parameters.js"></script>
 <script>
 	window.addEventListener("load", e=> {
 		let cardsEl = document.querySelector("#cards");
@@ -167,13 +167,13 @@
 			divEl.setAttribute("class", "cardflexitem");
 			let figureEl = document.createElement("figure");
 			let imageEl = document.createElement("img");
-			let src = "algorithm-1636425448_printrun-1636427957740_size-AR16x9_" + (j+1).toString().padStart(2, "0")+"-small.png";
+			let src = "page" + (j+1).toString().padStart(2, "0")+"-small.png";
 			console.log(src);
 			imageEl.src = src;
 			figureEl.appendChild(imageEl);
 			divEl.appendChild(figureEl);
 			cardsEl.appendChild(divEl);
-			let largesrc = "algorithm-1636425448_printrun-1636427957740_size-AR16x9_" + (j+1).toString().padStart(2, "0")+".png";
+			let largesrc = "page" + (j+1).toString().padStart(2, "0")+".png";
 			imageEl.addEventListener("click", e => {window.open(largesrc)});
 		});
 		let timestampEl = document.querySelector("#timestamp");
@@ -185,7 +185,7 @@
 			let liEl = document.createElement("li");
 			let aEl = document.createElement("a");
 			let url = 
-			aEl.setAttribute("href", "algorithm-1636425448_printrun-1636427957740_size-AR16x9_" + (j+1).toString().padStart(2, "0")+".pdf");
+			aEl.setAttribute("href", "page" + (j+1).toString().padStart(2, "0")+".pdf");
 			aEl.innerText = "page: "+(j+1).toString().padStart(2, "0");
 			liEl.appendChild(aEl);
 			pdfframesEl.appendChild(liEl);
