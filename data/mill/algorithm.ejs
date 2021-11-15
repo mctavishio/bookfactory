@@ -60,7 +60,7 @@
 	<header>
 		<h1>book #<%- book.printrun %></h1>
 	</header>
-	<div id="slides" class="vimeowrapper16x9">
+	<p id="slides" class="vimeowrapper16x9">
 		<figure>
 			<video controls=1 width="100%" loop=1 playsinline=1 muted=1 poster="books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_size-AR16x9_book/page01-small.png">
 			    <source src="books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_size-AR16x9_book/book.mov" type="video/mp4">
@@ -69,7 +69,7 @@
 			</video>
 			<figcaption>geometric abtraction sequence created by algorithm <%- p.algorithm %></figcaption>
 		</figure>
-	</div>
+	</p>
 	<p><a href="books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_size-AR16x9_book/index.html">view pages</a></p>
 </article>
 <% }) %>

@@ -832,7 +832,7 @@ nav ul li ul {
 p {
 	margin: 0;
 	margin-top: 0.8em;
-	margin-bottom: .8em;
+	margin-bottom: 0.8em;
 	line-height: 1.5em;
 }
 div {
@@ -1056,9 +1056,9 @@ figure audio {
 	max-height:100%;
 }
 figure figcaption {
-	margin:top: 1em;
+	margin-bottom: 1.5em;
 	font-size:.8em;
-	color: #006699;
+	color: var(--warmwhite);
 }
 div.vimeowrapper16x9 {
 	position: relative;
