@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>book factory: page</title>
+	<title>book factory: <%- p.algorithm %></title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-	<meta name="description" content="generative output from the book factory : page" />
+	<meta name="description" content="algorithm index: generative output from the book factory" />
 	<meta name="author" content="kathy mctavish">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -14,15 +14,19 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "WebPage",
-			"name": "blueatlas ::: fieldnotes",
-			"breadcrumb": "book factory > mill > algorithm-<%= alogorithm %>_printrun-<%= printrun %>_size-<%= size %>_book",
-          		"url": "https://www.bookfactory.work/data/mill/algorithm-<%= alogorithm %>_printrun-<%= printrun %>_size-<%= size %>_book/algorithm-<%= alogorithm %>_printrun-<%= printrun %>_size-<%= size %>_<%= page %>.html",
-			"description": "generative output from the book factory",
-			"datePublished": "<%= datetime %>",
-          		"image": "https://www.bookfactory.work/apple-touch-icon.png",
+			"name": "book factory: algorithm <%- p.algorithm %> book algorithm <%- p.printrun %>",
+			"breadcrumb": "book factory > algorithm:<%- p.algorithm %>",
+          	"url": "https://www.bookfactory.work/index_algorithm-<%- p.algorithm %>.html",
+			"description": "algorithm <%- p.algorithm %>: generative output from the book factory",
+			"datePublished": "<%- p.datetime %>",
+          	"image": "https://www.bookfactory.work/apple-touch-icon.png",
 			"author": "https://mctavish.io/bio.html",
 			"license": "http://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.en_US"
 		}
+	</script>
+	<script type="text/javascript">
+		let library = <%-JSON.stringify(p.library)%>;
+		// console.log(<%-JSON.stringify(p.library)%>);
 	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0989MECNZV"></script>
