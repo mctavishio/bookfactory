@@ -464,6 +464,7 @@ main.wide {
 
 article, section {
 	padding: 1em;
+	/*margin-top: 1em;*/
 	/*margin: 20px 20px;*/
 	/*width: 100%; min-width: 100%;*/
 	/*background-color: var(--red);*/
@@ -1067,14 +1068,15 @@ div.vimeowrapper16x9 {
 	padding-top: 25px;
 	height: 0;
 }
-div.vimeowrapper16x9 iframe {
+div.vimeowrapper16x9 iframe, div.vimeowrapper16x9 figure {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 }
-.vimeo-wrapper {
+div.vimeo-wrapper {
+	margin-bottom:2em;
    position: fixed;
    top: 0;
    left: 0;
@@ -1084,7 +1086,7 @@ div.vimeowrapper16x9 iframe {
    pointer-events: none;
    overflow: hidden;
 }
-.vimeo-wrapper iframe {
+div.vimeo-wrapper iframe, div.vimeo-wrapper figure, div.vimeo-wrapper video {
    width: 100vw;
    height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
    min-height: 100vh;
