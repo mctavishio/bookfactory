@@ -45,7 +45,7 @@ algorithms.forEach( a => {
 		    }
 		    else {
 		        try {
-		            fs.writeFileSync("../../books/algorithm-"+a+"_printrun-"+book.printrun+"_size-AR16x9_book/index.html", result, 'utf8');
+		            fs.writeFileSync("../../books/algorithm-"+a+"_printrun-"+book.printrun+"_book/index.html", result, 'utf8');
 		        } catch(err) {
 		            if (err) {
 		                throw err;

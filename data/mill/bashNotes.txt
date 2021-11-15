@@ -21,18 +21,18 @@ pdfunite *.pdf all.pdf
 for file in *pdf.png; do mv "$file" "${file/pdf.png/.png}"; done
 for file in *-0.png; do mv "$file" "${file/-0.png/.png}"; done
 
-for file in *.png; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_size-AR16x9_/page}"; done
-for file in *.pdf; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_size-AR16x9_/page}"; done
-for file in *.js; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_size-AR16x9_/page}"; done
-for file in *.sh; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_size-AR16x9_/page}"; done
+for file in *.png; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_/page}"; done
+for file in *.pdf; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_/page}"; done
+for file in *.js; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_/page}"; done
+for file in *.sh; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_/page}"; done
 rm pageprocessCommands.sh
-for file in *; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344_size-AR16x9/book}"; done
+for file in *; do mv "$file" "${file/algorithm-1636347815_printrun-1636418449344/book}"; done
 
 for file in *book/pageparameters.js; do mv "$file" "${file/pageparameters/parameters}"; done
 
 
 for file in *.png; do mv "$file" "${file/page.png/page}"; done
-algorithm-1636347815_printrun-1636418449344_size-AR16x9_47
+algorithm-1636347815_printrun-1636418449344_47
 
 
 for i in *; do magick convert -density 300 ./$i -depth 8 ./$i.tiff; done
@@ -52,4 +52,7 @@ for i in *.pdf; do magick convert $i -resize 1920 $i.jpg; done
 for i in *.pdf; do magick convert $i $i.png; done
 for i in *.pdf; do magick convert $i $i.tif; done
 for i in *.pdf; do magick convert $i $i.jpg; done
+
+zip up books/*
+for i in */; do zip -r "${i%/}.zip" "$i"; done
 

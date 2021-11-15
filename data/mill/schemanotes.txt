@@ -1,0 +1,13 @@
+https://www.w3.org/TR/rdf-schema/
+http://www.w3.org/1999/02/22-rdf-syntax-ns#
+
+validator :::
+https://www.w3.org/RDF/Validator/
+
+https://www.w3.org/TR/json-ld/
+https://www.w3.org/TR/rdf-json/
+
+https://en.wikipedia.org/wiki/Schema.org
+
+https://www.netlify.com/blog/2018/01/23/getting-started-with-jwt-and-identity/?_ga=2.234387166.1915898405.1633222660-1815634941.1630965324
+

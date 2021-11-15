@@ -1,0 +1,82 @@
+
+<link href="print.css" rel="stylesheet" media="print" />
+
+
+@media print {
+    @page {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    body {
+        padding-top: 72px;
+        padding-bottom: 72px ;
+    }
+}
+https://www.geeksforgeeks.org/how-to-remove-url-from-printing-the-page/
+
+@media print {
+               .noprint {
+                  visibility: hidden;
+               }
+            }
+
+
+example:::
+
+@media print {
+  header, footer, aside, form, … {
+    display: none;
+  }
+  article {
+    width:100%!important;
+    padding:0!important;
+    margin:0!important;
+  }
+}
+@page {
+  margin: 2cm;
+}
+
+
+@page:first {
+    margin: 0cm;
+}
+@page:last {
+    margin: 5cm;
+}
+@page:left {
+    margin: 2cm 1.5cm 2cm 2cm;
+}
+@page:right {
+    margin: 2cm 2cm 2cm 1.5cm;
+}
+
+@media print {
+  a:after {
+    content: "("attr(href)")";
+  }
+}
+
+
+a { text-decoration: none; color: inherit; }
+https://flaviocopes.com/css-printing/
+
+https://www.smashingmagazine.com/2018/05/print-stylesheets-in-2018/
+
+@media print {
+  footer {page-break-after: always;}
+}
+https://www.w3schools.com/cssref/pr_print_pageba.asp
+
+page-break-after: auto|always|avoid|left|right|initial|inherit;
+page-break-before: auto|always|avoid|left|right|initial|inherit;
+
+@media print {
+  pre, blockquote {page-break-inside: avoid;}
+}
+
+page-break-inside: auto|avoid|initial|inherit;
+
+ jspdf
+pdfkit
+ http://pdfmake.org/#/
