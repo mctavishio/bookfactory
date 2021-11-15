@@ -62,12 +62,12 @@
 	</header>
 	<div id="slides" class="vimeowrapper16x9">
 		<figure>
-			<video controls width="100%" loop=1>
-			    <source src="books/algorithm-<%- a.algorithm %>_printrun-<%- a.printrun %>_size-AR16x9_book/book.webm" type="video/webm">
+			<video controls=1 width="100%" loop=1 playsinline=1 muted=1 poster="books/algorithm-<%- a.algorithm %>_printrun-<%- a.printrun %>_size-AR16x9_book/page01-small.png">
 			    <source src="books/algorithm-<%- a.algorithm %>_printrun-<%- a.printrun %>_size-AR16x9_book/book.mov" type="video/mp4">
+			    <source src="books/algorithm-<%- a.algorithm %>_printrun-<%- a.printrun %>_size-AR16x9_book/book.webm" type="video/webm">
 			    Sorry, your browser doesn't support embedded videos.
 			</video>
-			<!-- <img src="books/algorithm-1635969788_printrun-1636396468438_size-AR16x9_01.png" /> -->
+			<figcaption>geometric abtraction sequence created by algorithm <%- a.algorithm %></figcaption>
 		</figure>
 	</div>
 	<p><a href="index_algorithm-<%- a.algorithm %>.html">view books (print runs)</a></p>
