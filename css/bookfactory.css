@@ -468,6 +468,9 @@ article, section {
 	/*margin: 20px 20px;*/
 	/*width: 100%; min-width: 100%;*/
 	/*background-color: var(--red);*/
+	/*border-top: solid 4px var(--warmblack);
+	border-bottom: dashed 4px var(--warmblack);*/
+	box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 }
 .optimize {
 	-webkit-transform: translate3d(0, 0, 0);
@@ -491,6 +494,8 @@ body main > header {
 /*	background-color: #fcfbe3;
 	background-color: var(--warmwhite);*/
 	margin-bottom: 1.2em;
+	padding: 1em;
+	box-shadow: 0px 10px 13px -7px rgba(25,25,24,0.5), 5px 5px 15px 5px rgba(25,25,24,0.5);
 	/*overflow: hidden;*/
 }
 h1 {
