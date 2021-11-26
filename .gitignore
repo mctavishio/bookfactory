@@ -1,7 +1,15 @@
 **/.DS_Store
 node_modules/
+notes/
+archive/
 keys.js
 **/*.zip
+**/*.mov
+**/*.mp4
+**/*.mp3
+**/*.webm
+**/*png
+!*png
 scratchFiles/
 temp/
 # Local Netlify folder

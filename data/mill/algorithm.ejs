@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>book factory: <%- p.algorithm %></title>
+	<title>book factory: <%- p.algorithmid %></title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 	<meta name="description" content="algorithm index: generative output from the book factory" />
@@ -14,19 +14,15 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "WebPage",
-			"name": "book factory: algorithm <%- p.algorithm %>",
-			"breadcrumb": "book factory > algorithm:<%- p.algorithm %>",
-          	"url": "https://www.bookfactory.work/index_algorithm-<%- p.algorithm %>.html",
-			"description": "algorithm <%- p.algorithm %>: generative output from the book factory",
+			"name": "book factory: algorithm <%- p.algorithmid %>",
+			"breadcrumb": "book factory > algorithm:<%- p.algorithmid %>",
+          	"url": "https://www.bookfactory.work/books_<%- p.timestamp %>/index.html",
+			"description": "algorithm <%- p.algorithmid %>: generative output from the book factory",
 			"datePublished": "<%- p.datetime %>",
           	"image": "https://www.bookfactory.work/apple-touch-icon.png",
 			"author": "https://mctavish.io/bio.html",
 			"license": "http://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.en_US"
 		}
-	</script>
-	<script type="text/javascript">
-		let library = <%-JSON.stringify(p.library)%>;
-		// console.log(<%-JSON.stringify(p.library)%>);
 	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0989MECNZV"></script>
@@ -47,30 +43,30 @@
 <div id="mainflex">
 <main id="main" class="compress" data-state="compressed">
 <header>
-	<h1>algorithm: #<%- p.algorithm %></h1>
+	<h1>algorithm: #<%- p.algorithmid %></h1>
+	<h2>print run #<%- book.datetime %></h2>
 </header>
 <nav>
 <ul class="expand" >
-	<li><a href="/index.html" class="corelink">back to algorithm index</a></li>
+	<li><a href="../index.html" class="corelink">back to algorithm index</a></li>
 </ul>
 </nav>
 
 <% p.books.forEach( book => {%>
 <article>
 	<header>
-		<h1>book #<%- book.printrun %></h1>
+		<h1>parameter set #<%- book.seedid %></h1>
 	</header>
 	<p id="slides" class="vimeowrapper16x9">
 		<figure>
-			<video controls=1 width="100%" loop=1 playsinline=1 muted=1 poster="books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_book/page01-small.png">
-			    <source src="https://storage.googleapis.com/bookfactory/books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_book/book.mov" type="video/mp4">
-			    <source src="https://storage.googleapis.com/bookfactory/books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_book/book.webm" type="video/webm">
+			<video controls=1 width="100%" loop=1 playsinline=1 muted=1 poster="<%- p.id %>/page01-small.png">
+			    <source src="https://storage.googleapis.com/bookfactory/books_<%- p.timestamp %>/<%- p.id %>/book.mp4" type="video/mp4">
 			    Sorry, your browser doesn't support embedded videos.
 			</video>
-			<figcaption>geometric abtraction sequence created by algorithm <%- p.algorithm %></figcaption>
+			<figcaption>geometric abtraction sequence created by algorithm and input parameter set on <%- p.datetime %></figcaption>
 		</figure>
 	</p>
-	<p><a href="books/algorithm-<%- p.algorithm %>_printrun-<%- book.printrun %>_book/index.html">view this book</a></p>
+	<p><a href="<%- book.id %>/index.html">view this book</a></p>
 </article>
 <% }) %>
 
@@ -81,7 +77,7 @@
 	<details>
     <summary>click to view</summary>
 	<div id="rawdata" class="code">
-		<%-JSON.stringify(p.library,null,2)%>
+		<%-JSON.stringify(p.books,null,2)%>
 	</div>
 	</details>
 </article>

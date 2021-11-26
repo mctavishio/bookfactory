@@ -1,5 +1,5 @@
 const PDFDocument = require("pdfkit");
-const PDFImage = require("pdf-image").PDFImage;
+// const PDFImage = require("pdf-image").PDFImage;
 const fs = require("fs");
 const tools = require("./tools.js");
 const algorithms = require("./algorithms.js");
@@ -9,23 +9,30 @@ const datetime = new Date();
 const timestamp = datetime.getTime();
 const datetimestr = datetime.toDateString();
 const datetimeISOstr = datetime.toISOString();
+const librarybooksold = require("./librarybooks_old");
 let newbooks = [];
+
+let librarydir = "books_" + timestamp;
+if (!fs.existsSync(librarydir)){
+    fs.mkdirSync(librarydir);
+}
 bookseeds.forEach( seed => {
 	algorithms.forEach( algo => {
 		let id = prefix + "_" + algo.id + "_" + seed.id  + "_t-" + timestamp;
 
-		let dir = "./" + id;
+		let dir = id;
 		if (!fs.existsSync(dir)){
 		    fs.mkdirSync(dir);
 		}
-		newbooks.push({dir:dir, algorithm:algo.id, timestamp:timestamp, size:seed.dimensions.name, seed:seed.id});
+
+		// newbooks.push({dir:dir, algorithm:algo.id, timestamp:timestamp, size:seed.dimensions.name, seed:seed.id});
 		console.log("algoid = " + algo.id);
 		let book = {
 			id,
 			timestamp, datetimestr, datetimeISOstr,
 			algorithmid: algo.id,
 			seedid: seed.id,
-			directory: dir,
+			directory: "/" + librarydir + "/" + dir,
 			npages: seed.npages,
 			colors: seed.colors(seed.pigments, seed.mixer),
 			dimensions: seed.dimensions,
@@ -33,6 +40,7 @@ bookseeds.forEach( seed => {
 			author: "mctavish",
 		};
 		// console.log("book = " + JSON.stringify(book));
+		newbooks.push({...book});
 
 		let drawings = [...Array(seed.npages).keys()].reduce( (pagematrix, pagej) => {
 			let p = {
@@ -46,7 +54,6 @@ bookseeds.forEach( seed => {
 			return  pagematrix.concat({layers});
 		}, []);
 		book.drawings = drawings;
-		// console.log("book.drawings = " + JSON.stringify(book.drawings);
 		book.drawings.forEach( (page,p) => {
 			let pageid = book.id + "_" + (p+1).toString().padStart(3, "0");
 			let file = "page" + (p+1).toString().padStart(3, "0") + ".pdf";
@@ -88,7 +95,7 @@ bookseeds.forEach( seed => {
 			doc.end();
 			p < seed.npages-1 ? doc.addPage() : "done";
 		});
-		fs.writeFileSync(book.directory+"/parameters.js", JSON.stringify(book,null,"\t"), (err) => {
+		fs.writeFileSync(dir+"/parameters.js", "let p = " + JSON.stringify(book,null,"\t"), (err) => {
 		  if (err)
 		    console.log(err);
 		  else {
@@ -97,7 +104,22 @@ bookseeds.forEach( seed => {
 		});
 	});
 });
-fs.writeFileSync("librarybooks_"+timestamp+".js", JSON.stringify(newbooks,null,"\t"), (err) => {
+let librarybookfile = "librarybooks_"+timestamp+".js";
+fs.writeFileSync(librarybookfile, "module.exports = " + JSON.stringify(newbooks,null,"\t"), (err) => {
+  if (err)
+    console.log(err);
+  else {
+    console.log("File written successfully\n");
+  }
+});
+let newlibrary = librarybooksold.reduce( (acc,book,j) => {
+	acc.push({...book});
+	return acc;
+},[]);
+newbooks.forEach(book => {
+	newlibrary.push({...book});
+	});
+fs.writeFileSync("librarybooks.js", "module.exports = " + JSON.stringify(newlibrary,null,"\t"), (err) => {
   if (err)
     console.log(err);
   else {
@@ -106,7 +128,8 @@ fs.writeFileSync("librarybooks_"+timestamp+".js", JSON.stringify(newbooks,null,"
 });
 
 let nextSteps = "";
-newbooks.map(b=>b.dir).forEach( dir => {
+let nextstepsfile = "nextSteps_"+timestamp+".sh";
+newbooks.map(b=>b.id).forEach( dir => {
 	nextSteps = nextSteps + `
 cd ${dir}
 for file in *.pdf; do magick convert $file -resize 1920 $file.png; done;
@@ -119,9 +142,17 @@ cd ..
 cp McTavishResume202011_extensive.pdf ${dir}
 zip ${dir}.zip ${dir}
 mv ${dir}.zip ${dir}/book.zip
+mv ${dir} ${librarydir}
 `;
 });
-fs.writeFileSync("processCommands_"+timestamp+".sh", nextSteps, (err) => {
+nextSteps = nextSteps + `
+cp ${nextstepsfile} ${librarydir}/nextSteps.sh
+mv ${librarybookfile} ${librarydir}/library.js
+mv librarybooks_old.js librarybooks_older.js
+gsutil -m cp -r ${librarydir} gs://bookfactory/
+`;
+
+fs.writeFileSync(nextstepsfile, nextSteps, (err) => {
   if (err)
     console.log(err);
   else {
